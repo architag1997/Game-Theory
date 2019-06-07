@@ -9,53 +9,8 @@ struct Move
     int row, col;
 };
 
-void intro()
-{
-    system("cls");
-    cout<<"\n\t\t\t\t\t   TIC TAC TOE";
-    while(true)
-    {
-        cout<<"\n\nPlayer choose your symbol (X|O): ";
-        cin>>player;
-        if(player == 'X' || player == 'O')
-            break;
-        else
-            cout<<"Oops!!!Enter either X or O only.";
-    }
-    if(player == 'X')
-        opponent = 'O';
-    else
-        opponent = 'X';
-    cout<<"\nSelect mode:\n\t1. Easy (Press 'E')\n\t2. Medium (Press 'M')\n\t3. Hard (Press 'H')";
-    while(true)
-    {
-        cout<<"\nEnter your choice: ";
-        cin>>mode;
-        mode = tolower(mode);
-        if(mode == 'e' || mode == 'm' || mode == 'h')
-            break;
-        else
-            cout<<"Invalid choice.";
-    }
-    cout<<"\nLets start the game...";
-    getch();
-}
-void disp_board(char board[3][3])
-{
-    system("cls");
-    cout<<"\n\t\t\t\t   TIC TAC TOE";
-    cout<<"\n\n\t\t\t\t     |     |     ";
-    cout<<"\n\t\t\t\t  "<<board[0][0]<<"  |  "<<board[0][1]<<"  |  "<<board[0][2];
-    cout<<"\n\t\t\t\t_____|_____|_____";
-    cout<<"\n\t\t\t\t     |     |     ";
-    cout<<"\n\t\t\t\t  "<<board[1][0]<<"  |  "<<board[1][1]<<"  |  "<<board[1][2];
-    cout<<"\n\t\t\t\t_____|_____|_____";
-    cout<<"\n\t\t\t\t     |     |     ";
-    cout<<"\n\t\t\t\t  "<<board[2][0]<<"  |  "<<board[2][1]<<"  |  "<<board[2][2];
-    cout<<"\n\t\t\t\t     |     |     ";
-}
-
-bool isMoveLeft(char b[3][3])
+//checks if any moves are left to be played.
+bool isMoveLeft(string b[3])
 {
     for(int i = 0; i<3; i++)
         for(int j = 0; j<3; j++)
@@ -64,7 +19,8 @@ bool isMoveLeft(char b[3][3])
     return false;
 }
 
-int board_check(char b[3][3])
+//check and returns the score of board depending upon who is winning.
+int board_check(string b[3])
 {
     for(int row = 0; row<3; row++)
     {
@@ -98,7 +54,7 @@ int board_check(char b[3][3])
     return 0;
 }
 
-int minimax(char board[3][3], int depth, bool isMax)
+int minimax(string board[3], int depth, bool isMax)
 {
     int scr = board_check(board);
     if(scr == 10)
@@ -146,7 +102,7 @@ int minimax(char board[3][3], int depth, bool isMax)
     }
 }
 
-Move findBestMove(char board[3][3])
+Move findBestMove(string board[3])
 {
     int bestVal = 1000;
     Move bestMove;
@@ -201,35 +157,93 @@ int getProb()
     return start + rand()%(stop - start + 1);
 }
 
-int main()
+void ini_display()
 {
-    intro();
-    char board[3][3] =
-                {
-                    {' ',' ',' '},
-                    {' ',' ',' '},
-                    {' ',' ',' '}
-                };
-    string full = "000000000";
-    int turn_counter = 1, moves;
-    while(turn_counter <= 9)
+    system("cls");
+    cout<<"\n\t\t\tWelcome to a Game of TIC TAC TOE\n";
+    cout<<"RULES:\nEnter the place position of the square in the board to play.\n";
+    cout<<"For reference, the board is of the form as below:";
+    cout<<"\n\n\t\t\t\t     |     |     ";
+    cout<<"\n\t\t\t\t  1  |  2  |  3  ";
+    cout<<"\n\t\t\t\t_____|_____|_____";
+    cout<<"\n\t\t\t\t     |     |     ";
+    cout<<"\n\t\t\t\t  4  |  5  |  6  ";
+    cout<<"\n\t\t\t\t_____|_____|_____";
+    cout<<"\n\t\t\t\t     |     |     ";
+    cout<<"\n\t\t\t\t  7  |  8  |  9  ";
+    cout<<"\n\t\t\t\t     |     |     ";
+}
+
+void startup()
+{
+    while(true)
+    {
+        cout<<"\nPlayer choose your symbol (X|O): ";
+        cin>>player;
+        if(player == 'X' || player == 'O')
+            break;
+        else
+            cout<<"Oops!!!Enter either X or O only.";
+    }
+    if(player == 'X')
+        opponent = 'O';
+    else
+        opponent = 'X';
+    cout<<"Select mode:\n\t1. Easy (Press 'E')\n\t2. Medium (Press 'M')\n\t3. Hard (Press 'H')";
+    while(true)
+    {
+        cout<<"\nEnter your choice: ";
+        cin>>mode;
+        mode = tolower(mode);
+        if(mode == 'e' || mode == 'm' || mode == 'h')
+            break;
+        else
+            cout<<"Invalid choice...Try Again.";
+    }
+    cout<<"\nLets start the game...";
+    getch();
+}
+
+void disp_board(string board[3])
+{
+    system("cls");
+    cout<<"\n\t\t\tWelcome to a Game of TIC TAC TOE\n";
+    cout<<"\n\n\t\t\t\t     |     |     ";
+    cout<<"\n\t\t\t\t  "<<board[0][0]<<"  |  "<<board[0][1]<<"  |  "<<board[0][2];
+    cout<<"\n\t\t\t\t_____|_____|_____";
+    cout<<"\n\t\t\t\t     |     |     ";
+    cout<<"\n\t\t\t\t  "<<board[1][0]<<"  |  "<<board[1][1]<<"  |  "<<board[1][2];
+    cout<<"\n\t\t\t\t_____|_____|_____";
+    cout<<"\n\t\t\t\t     |     |     ";
+    cout<<"\n\t\t\t\t  "<<board[2][0]<<"  |  "<<board[2][1]<<"  |  "<<board[2][2];
+    cout<<"\n\t\t\t\t     |     |     ";
+}
+
+void play_game()
+{
+    ini_display();
+    startup();
+    string board[3] = {"   ", "   ", "   "};
+    string place_counter = "000000000";
+    int turn_counter = 1, mov;
+    while(true)
     {
         disp_board(board);
         if(turn_counter % 2)
         {
-            cout<<"\n\nYour move: ";
-            cin>>moves;
-
-            if(full[moves-1] == '0')
+            cout<<"\n\nPLAYER Enter your move: ";
+            cin>>mov;
+            if(place_counter[mov-1] == '0')
             {
-                board[(moves-1)/3][(moves-1)%3] = player;
-                full[moves-1] = '1';
+                board[(mov-1)/3][(mov-1)%3] = player;
+                place_counter[mov-1] = '1';
+                disp_board(board);
             }
             else
             {
-                cout<<"Invalid Move!!!\n";
+                cout<<"Invalid Move:(\n";
                 turn_counter--;
-                system("pause");
+                getch();
             }
         }
         else
@@ -256,28 +270,46 @@ int main()
                     }
                 }
             }
-            full[pos] = '1';
+            place_counter[pos] = '1';
             disp_board(board);
-            cout<<"\n\nCompuer played at "<<pos+1;
+            cout<<"\n\nCPU played at "<<pos+1;
             getch();
         }
-        disp_board(board);
         int win = board_check(board);
         if(win != 0)
         {
-            cout<<"\n\nGAME OVER!!!";
+            cout<<"\nGAME OVER.";
             if(win == 10)
-                cout<<"\nYou WON!!!";
+                cout<<"\nHurray! You WON:)";
             else if(win == -10)
-                cout<<"\nYou LOST!!!";
+                cout<<"\nSorry! You LOST:(";
+            break;
+        }
+
+        if(!isMoveLeft(board))
+        {
+            cout<<"\nGAME OVER.\nIt's A Draw";
             break;
         }
         turn_counter++;
     }
-    if(turn_counter == 10)
+}
+
+bool replay()
+{
+    char c;
+    cout<<"\n\nWanna play again (Y/N)? ";
+    cin>>c;
+    system("cls");
+    if(c == 'Y' || c == 'y')
+        return true;
+    return false;
+}
+int main()
+{
+    do
     {
-        cout<<"\nGAME OVER";
-        cout<<"\nDraw";
-    }
+        play_game();
+    }while(replay());
     return 0;
 }
