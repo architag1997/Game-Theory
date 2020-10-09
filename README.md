@@ -1,2 +1,2 @@
 # Game-Theory
-Tic Tac Toe game with AI functionality using minimax algoritm
+A command line based Tic Tac Toe game made using C++. AI opponent functionality implemented using minimax algorithm.
